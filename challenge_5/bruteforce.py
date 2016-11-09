@@ -19,23 +19,9 @@ charswap_func_table = [
     'func_counter_plus_1_9'
 ]
 
+# another_cipher is that WORD buffer at 0x0040A140
 another_cipher = open('another_cipher', 'rb').read()
 another_cipher = another_cipher[:0x182 * 2]
-
-# key = []
-    
-# for char in arg_key:
-    # key.append(ord(char))
-    # key.append(0)
-    
-# key += [0,0,0,0,0,0,0,0,0]
-
-# func_counter    = 0
-# global_counter  = 9
-# _some_result  = 0
-# _what  = 0
-
-# key_validation()
 
 def key_validation():
     global func_counter
@@ -297,3 +283,29 @@ def func_counter_plus_1_9():
     global func_counter
     
     func_counter += 1
+    
+
+charset = [chr(v) for v in range(33, 126)]
+diff = []
+
+for char in charset:
+    key = []
+    
+    for _ in range(10):
+        key.append(ord(char))
+        key.append(0)
+        
+    key += [0,0,0,0,0,0,0,0,0]
+
+    func_counter    = 0
+    global_counter  = 9
+    _some_result  = 0
+    _what  = 0
+
+    key_validation()
+    
+    if _some_result != 0x133:
+        diff.append(char)
+        
+print(diff)
+    
